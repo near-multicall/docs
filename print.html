@@ -149,20 +149,41 @@
 <p>The regular DAO contract (SputnikDAO) only allows calling one target contract per proposal. That's why for proposals that call multiple smart contracts, we need a proxy contract that will handle all desired function calls. Multicall instances serve this purpose. Every DAO has its own private multicall instance to work with. 
 <img src="https://i.imgur.com/jUgiHru.png" alt="" />
 The DAO will call its MI and pass it some instructions, the MI will follow those instructions to call the desired functions on the target contracts.</p>
-<pre><code class="language-admonish info">The MI address is always derived from the DAO address. It's easy to explain it with an example:
-If the DAO address is `marmaj.sputnik-dao.near` then it will have a MI deployed at `marmaj.v1.multicall.near`
-</code></pre>
+<div id="admonition-info" class="admonition info">
+<div class="admonition-title">
+<p>Info</p>
+<p><a class="admonition-anchor-link" href="getting-started/introduction.html#admonition-info"></a></p>
+</div>
+<div>
+<p>The MI address is always derived from the DAO address. It's easy to explain it with an example:
+If the DAO address is <code>marmaj.sputnik-dao.near</code> then it will have a MI deployed at <code>marmaj.v1.multicall.near</code></p>
+</div>
+</div>
 <p>DAOs need to create a multicall instance (MI) before using it for the first time. You can think of this as an installation step that only happens once. Instructions for this can be found on the <a href="getting-started/onboarding.html">onboarding guide</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="onboard-your-dao"><a class="header" href="#onboard-your-dao">Onboard your DAO</a></h1>
-<pre><code class="language-admonish note">In order to create a multicall instance for your DAO, you must have permissions to create function-call proposals on the DAO. 
-</code></pre>
+<div id="admonition-note" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="getting-started/onboarding.html#admonition-note"></a></p>
+</div>
+<div>
+<p>In order to create a multicall instance for your DAO, you must have permissions to create function-call proposals on the DAO.</p>
+</div>
+</div>
 <ol>
 <li>Go to <a href="https://multicall.app/#/dao" target="_blank">https://multicall.app/#/dao</a></li>
 <li>In the lower left hand corner log in with your wallet (1.) and select the DAO you would like to use multicall with (2.).</li>
 </ol>
 <p><img src="https://i.imgur.com/PiS2KTW.png" alt="" /></p>
-<pre><code class="language-admonish tip">If the DAO symbol lights up red, the address is not a valid dao address - please check for typos. Instead the symbol should be yellow, indicating that while the DAO exists, there is no belonging multicall instance yet.
-</code></pre>
+<div id="admonition-tip" class="admonition tip">
+<div class="admonition-title">
+<p>Tip</p>
+<p><a class="admonition-anchor-link" href="getting-started/onboarding.html#admonition-tip"></a></p>
+</div>
+<div>
+<p>If the DAO symbol lights up red, the address is not a valid dao address - please check for typos. Instead the symbol should be yellow, indicating that while the DAO exists, there is no belonging multicall instance yet.</p>
+</div>
+</div>
 <ol start="3">
 <li>In the middle of the page you see requirements that need to be met in order to create a multicall instance for the specified dao. If all except &quot;<em>DAO has no multicall instance</em>&quot; are met, a green button shows up, click it to propose a multicall creation proposal.</li>
 </ol>
@@ -178,15 +199,36 @@ If the DAO address is `marmaj.sputnik-dao.near` then it will have a MI deployed 
 <p><img src="https://i.imgur.com/UtFmnOt.gif" alt="" /></p>
 <p>Let's talk a little about the cards. Cards serve as building blocks of the proposal. They hold information about what contract and function to call with what parameters. Click the pen icon (<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /><span class="material-symbols-outlined">
 edit</span>) in the top right corner of a card to open the card's editor where you specify the required parameter. Any interaction can be modeled using the custom card, but we're always expanding our selection of cards for sepecific purposes to lower the technical barriers for users.</p>
-<pre><code class="language-admonish info">Think we're missing an important card? Let us know on our &lt;a href=&quot;https://discord.gg/wc6T6bPvdr&quot; target=&quot;_blank&quot;&gt;Discord&lt;/a&gt; !
-</code></pre>
+<div id="admonition-info" class="admonition info">
+<div class="admonition-title">
+<p>Info</p>
+<p><a class="admonition-anchor-link" href="getting-started/making-proposals.html#admonition-info"></a></p>
+</div>
+<div>
+<p>Think we're missing an important card? Let us know on our <a href="https://discord.gg/wc6T6bPvdr" target="_blank">Discord</a> !</p>
+</div>
+</div>
 <p>Once you are satisfied with your proposal, click on the <em>Export</em> tab in the side menu. You will be asked to put a proposal description that will be displayed on AstroDao. If everything is fine, i.e. you don't have any unresolved input errors and you have the rights to make proposals on the DAO, the propose button at the bottom of the menu will turn green. Click it to make the proposal on the DAO.</p>
-<pre><code class="language-admonish note">A small amount of NEAR will be required to make the transaction. It represents a proposal bond paid to the DAO, and will be reimbursed once your DAO proposal is approved. The amount is set in the DAO configuration, near-multicall does not charge any fees.
-</code></pre>
+<div id="admonition-note" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="getting-started/making-proposals.html#admonition-note"></a></p>
+</div>
+<div>
+<p>A small amount of NEAR will be required to make the transaction. It represents a proposal bond paid to the DAO, and will be reimbursed once your DAO proposal is approved. The amount is set in the DAO configuration, near-multicall does not charge any fees.</p>
+</div>
+</div>
 <h2 id="dealing-with-funds"><a class="header" href="#dealing-with-funds">Dealing with funds</a></h2>
 <p>As we have seen in <em><a href="getting-started/introduction.html#the-multicall-instance-mi">The multicall instance</a></em> the MI serves as a proxy contract for the DAO. Since the DAO and MI are not the same contract, the MI cannot access funds belonging to the DAO. This is a good thing when it comes to security, but does bring some inconveniences. Any funds that are need for a multicall proposal should be transferred to the MI prior to the execution of said proposal. We suggest to have a small tokens' allowance on the MI for quick access, while keeping the main DAO's treasury on the DAO. The funds on the MI are only accessible by the MI admins (per default, only the DAO).</p>
-<pre><code class="language-admonish caution">Near-multicall is a beta software and we do not guarantee the safety of assets on the MI. Our contracts are open source, and can be found on &lt;a href=&quot;https://github.com/near-multicall/contracts&quot; target=&quot;_blank&quot;&gt;this repository&lt;/a&gt;. Use at your own risk.
-</code></pre>
+<div id="admonition-caution" class="admonition warning">
+<div class="admonition-title">
+<p>Caution</p>
+<p><a class="admonition-anchor-link" href="getting-started/making-proposals.html#admonition-caution"></a></p>
+</div>
+<div>
+<p>Near-multicall is a beta software and we do not guarantee the safety of assets on the MI. Our contracts are open source, and can be found on <a href="https://github.com/near-multicall/contracts" target="_blank">this repository</a>. Use at your own risk.</p>
+</div>
+</div>
 <p><img src="https://i.imgur.com/myT7aaY.png" alt="" /></p>
 <p>You can easily see the available funds on the MI via the <em>Funds</em> tab on the <a href="https://multicall.app/#/dao" target="_blank"><i>DAO page</i></a>.<br />
 When making a multicall proposal, keep in mind that the actions will be called from the MI's address, and not the DAO address. Say you want to interact with a Dapp, it will be the MI's Dapp account that is used, not the DAO's.</p>
@@ -210,9 +252,18 @@ When making a multicall proposal, keep in mind that the actions will be called f
 </ol>
 <p>Here's a GIF going over the same steps using <a href="https://app.ref.finance/">Ref-finance</a></p>
 <p><img src="https://i.imgur.com/xv2BMVn.gif" alt="" /></p>
-<pre><code class="language-admonish note">- This only works with DApps that support either [NEAR wallet](https://wallet.near.org/) or [MyNearWallet](https://mynearwallet.com/)
-- Login will be in &quot;read-only&quot; mode, so the DAO's account will not initiate transactions using the DApp's interface
-</code></pre>
+<div id="admonition-note" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="dao-login.html#admonition-note"></a></p>
+</div>
+<div>
+<ul>
+<li>This only works with DApps that support either <a href="https://wallet.near.org/">NEAR wallet</a> or <a href="https://mynearwallet.com/">MyNearWallet</a></li>
+<li>Login will be in &quot;read-only&quot; mode, so the DAO's account will not initiate transactions using the DApp's interface</li>
+</ul>
+</div>
+</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="important-links"><a class="header" href="#important-links">Important links:</a></h1>
 <ul>
 <li><strong>Website (Mainnet):</strong> <a href="https://multicall.app/" target="_blank">https://multicall.app</a></li>
