@@ -143,11 +143,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>Before starting to use near-multicall for making DAO proposals, we first need to establish a general idea of how things work. </p>
+<p>Before starting to use near-multicall for making DAO proposals, we first need to establish a general understanding of how it works. </p>
 <h2 id="the-multicall-instance-mi"><a class="header" href="#the-multicall-instance-mi">The multicall instance (MI)</a></h2>
-<p>The regular DAO contract (SputnikDAO) only allows calling one target contract per proposal. That's why for proposals that call multiple smart contracts, we need a proxy contract that will handle all desired function calls. Multicall instances serve this purpose. Every DAO has its own private multicall instance to work with. 
+<p>The regular DAO contract (SputnikDAO) can only call one target contract per proposal. That's why for proposals that call multiple smart contracts, we need a proxy contract that will handle all desired function calls. Multicall instances serve this purpose. Every DAO has its own private multicall instance to work with. 
 <img src="https://i.imgur.com/jUgiHru.png" alt="" />
-The DAO will call its MI and pass it some instructions, the MI will follow those instructions to call the desired functions on the target contracts.</p>
+In a multicall proposal, the DAO calls its MI and passes it some instructions, the MI will follow those instructions to call the desired functions on the target contracts.</p>
 <div id="admonition-info" class="admonition info">
 <div class="admonition-title">
 <p>Info</p>
