@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Near-multicall</title>
-        <meta name="robots" content="noindex" />
+        <title>Making Proposals - Near-multicall</title>
 
 
         <!-- Custom HTML head -->
@@ -13,30 +12,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="././assets/css/mdbook-admonish.css">
+        <link rel="stylesheet" href="../././assets/css/mdbook-admonish.css">
 
     </head>
     <body>
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -82,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="getting-started/making-proposals.html"><strong aria-hidden="true">1.2.</strong> Making Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="links.html"><strong aria-hidden="true">3.</strong> Links</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="../getting-started/making-proposals.html" class="active"><strong aria-hidden="true">1.2.</strong> Making Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="../dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="../links.html"><strong aria-hidden="true">3.</strong> Links</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -114,7 +113,7 @@
                     <h1 class="menu-title">Near-multicall</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -143,37 +142,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>Before starting to use near-multicall for making DAO proposals, we first need to establish a general idea of how things work. </p>
-<h2 id="the-multicall-instance-mi"><a class="header" href="#the-multicall-instance-mi">The multicall instance (MI)</a></h2>
-<p>The regular DAO contract (SputnikDAO) only allows calling one target contract per proposal. That's why for proposals that call multiple smart contracts, we need a proxy contract that will handle all desired function calls. Multicall instances serve this purpose. Every DAO has its own private multicall instance to work with. 
-<img src="https://i.imgur.com/jUgiHru.png" alt="" />
-The DAO will call its MI and pass it some instructions, the MI will follow those instructions to call the desired functions on the target contracts.</p>
-<pre><code class="language-admonish info">The MI address is always derived from the DAO address. It's easy to explain it with an example:
-If the DAO address is `marmaj.sputnik-dao.near` then it will have a MI deployed at `marmaj.v1.multicall.near`
-</code></pre>
-<p>DAOs need to create a multicall instance (MI) before using it for the first time. You can think of this as an installation step that only happens once. Instructions for this can be found on the <a href="getting-started/onboarding.html">onboarding guide</a>.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="onboard-your-dao"><a class="header" href="#onboard-your-dao">Onboard your DAO</a></h1>
-<pre><code class="language-admonish note">In order to create a multicall instance for your DAO, you must have permissions to create function-call proposals on the DAO. 
-</code></pre>
-<ol>
-<li>Go to <a href="https://multicall.app/#/dao" target="_blank">https://multicall.app/#/dao</a></li>
-<li>In the lower left hand corner log in with your wallet (1.) and select the DAO you would like to use multicall with (2.).</li>
-</ol>
-<p><img src="https://i.imgur.com/PiS2KTW.png" alt="" /></p>
-<pre><code class="language-admonish tip">If the DAO symbol lights up red, the address is not a valid dao address - please check for typos. Instead the symbol should be yellow, indicating that while the DAO exists, there is no belonging multicall instance yet.
-</code></pre>
-<ol start="3">
-<li>In the middle of the page you see requirements that need to be met in order to create a multicall instance for the specified dao. If all except &quot;<em>DAO has no multicall instance</em>&quot; are met, a green button shows up, click it to propose a multicall creation proposal.</li>
-</ol>
-<p><img src="https://i.imgur.com/9fntsfD.png" alt="" /></p>
-<p>The website will also show a blue button, if a creation proposal already exists, click it to vote yes (You can also vote using AstroDAO).</p>
-<p><img src="https://i.imgur.com/mQpHGcu.png" alt="" /></p>
-<ol start="4">
-<li>Once the proposal passes, a multicall instance will be deployed to <strong>[dao‑name].v1.multicall.near</strong>. If a multicall instance exists for the chosen DAO, the website will display its state, such as whitelisted tokens and job bond.</li>
-</ol>
-<p><img src="https://i.imgur.com/IIQYxOs.png" alt="" /></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="make-a-multicall-proposal"><a class="header" href="#make-a-multicall-proposal">Make a multicall proposal</a></h1>
+                        <h1 id="make-a-multicall-proposal"><a class="header" href="#make-a-multicall-proposal">Make a multicall proposal</a></h1>
 <p><a href="https://multicall.app/#/dao" target="_blank">Our website</a> offers a space to build your proposals. Simply drag a <em>card</em> from the side menu into the column in the middle of the page. This column will contain the instructions given to the Multicall Instance (MI), and they are executed in <strong>sequence</strong> from top to bottom. For advanced usage, you can add more columns by clicking the <em>+</em> icon on top of the columns. The instructions in all columns will run <strong>concurrently</strong>.</p>
 <p><img src="https://i.imgur.com/UtFmnOt.gif" alt="" /></p>
 <p>Let's talk a little about the cards. Cards serve as building blocks of the proposal. They hold information about what contract and function to call with what parameters. Click the pen icon (<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /><span class="material-symbols-outlined">
@@ -184,49 +153,24 @@ edit</span>) in the top right corner of a card to open the card's editor where y
 <pre><code class="language-admonish note">A small amount of NEAR will be required to make the transaction. It represents a proposal bond paid to the DAO, and will be reimbursed once your DAO proposal is approved. The amount is set in the DAO configuration, near-multicall does not charge any fees.
 </code></pre>
 <h2 id="dealing-with-funds"><a class="header" href="#dealing-with-funds">Dealing with funds</a></h2>
-<p>As we have seen in <em><a href="getting-started/introduction.html#the-multicall-instance-mi">The multicall instance</a></em> the MI serves as a proxy contract for the DAO. Since the DAO and MI are not the same contract, the MI cannot access funds belonging to the DAO. This is a good thing when it comes to security, but does bring some inconveniences. Any funds that are need for a multicall proposal should be transferred to the MI prior to the execution of said proposal. We suggest to have a small tokens' allowance on the MI for quick access, while keeping the main DAO's treasury on the DAO. The funds on the MI are only accessible by the MI admins (per default, only the DAO).</p>
+<p>As we have seen in <em><a href="introduction.html#the-multicall-instance-mi">The multicall instance</a></em> the MI serves as a proxy contract for the DAO. Since the DAO and MI are not the same contract, the MI cannot access funds belonging to the DAO. This is a good thing when it comes to security, but does bring some inconveniences. Any funds that are need for a multicall proposal should be transferred to the MI prior to the execution of said proposal. We suggest to have a small tokens' allowance on the MI for quick access, while keeping the main DAO's treasury on the DAO. The funds on the MI are only accessible by the MI admins (per default, only the DAO).</p>
 <pre><code class="language-admonish caution">Near-multicall is a beta software and we do not guarantee the safety of assets on the MI. Our contracts are open source, and can be found on &lt;a href=&quot;https://github.com/near-multicall/contracts&quot; target=&quot;_blank&quot;&gt;this repository&lt;/a&gt;. Use at your own risk.
 </code></pre>
 <p><img src="https://i.imgur.com/myT7aaY.png" alt="" /></p>
 <p>You can easily see the available funds on the MI via the <em>Funds</em> tab on the <a href="https://multicall.app/#/dao" target="_blank"><i>DAO page</i></a>.<br />
 When making a multicall proposal, keep in mind that the actions will be called from the MI's address, and not the DAO address. Say you want to interact with a Dapp, it will be the MI's Dapp account that is used, not the DAO's.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="dao-login"><a class="header" href="#dao-login">DAO login</a></h1>
-<p>Near-multicall allows DAOs to interact more freely with other DApps on NEAR. However, it's not always easy to see the results of these interactions. DApp interfaces provide invaluable information to their users, such as:</p>
-<ul>
-<li>Overview of Defi positions </li>
-<li>View into pending or unclaimed rewards</li>
-<li>Usage history and statistics</li>
-</ul>
-<p>Hence the need for DAO members to login into DApps using their DAO's address.</p>
-<h2 id="heres-how-to-do-it"><a class="header" href="#heres-how-to-do-it">Here's how to do it:</a></h2>
-<ol>
-<li>Open the DApp to be used. Example: <a href="https://app.ref.finance/">Ref-finance</a></li>
-<li>If you're already logged in with your personal wallet there, Log out.</li>
-<li>On Ref, click login, choose NEAR wallet, and then close that tab.</li>
-<li>Open <a href="https:///www.multicall.app/#/app/">Multicall</a> on a seperate tab. </li>
-<li>Click the DAO/Multicall login dialog.</li>
-<li>Paste the DApp URL in the input field.</li>
-<li>Click on Proceed.</li>
-</ol>
-<p>Here's a GIF going over the same steps using <a href="https://app.ref.finance/">Ref-finance</a></p>
-<p><img src="https://i.imgur.com/xv2BMVn.gif" alt="" /></p>
-<pre><code class="language-admonish note">- This only works with DApps that support either [NEAR wallet](https://wallet.near.org/) or [MyNearWallet](https://mynearwallet.com/)
-- Login will be in &quot;read-only&quot; mode, so the DAO's account will not initiate transactions using the DApp's interface
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="important-links"><a class="header" href="#important-links">Important links:</a></h1>
-<ul>
-<li><strong>Website (Mainnet):</strong> <a href="https://multicall.app/" target="_blank">https://multicall.app</a></li>
-<li><strong>Website (Testnet):</strong> <a href="https://testnet.multicall.app/" target="_blank">https://testnet.multicall.app</a></li>
-<li><strong>GitHub:</strong> <a href="https://github.com/near-multicall" target="_blank">https://github.com/near-multicall</a></li>
-<li><strong>Twitter:</strong> <a href="https://twitter.com/near_multicall" target="_blank">https://twitter.com/near_multicall</a></li>
-<li><strong>Discord:</strong> <a href="https://discord.gg/wc6T6bPvdr" target="_blank">https://discord.gg/wc6T6bPvdr</a></li>
-</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../getting-started/onboarding.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next" href="../dao-login.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -234,7 +178,13 @@ When making a multicall proposal, keep in mind that the actions will be called f
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../getting-started/onboarding.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next" href="../dao-login.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -247,21 +197,16 @@ When making a multicall proposal, keep in mind that the actions will be called f
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
-        <script>
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
 
     </body>
 </html>
