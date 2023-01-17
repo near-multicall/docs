@@ -6,4 +6,8 @@
 
 - [DAO login](./dao-login.md)
 
+- [Contracts](./contracts/overview.md)
+    - [Factory](./contracts/factory.md)
+    - [Instance](./contracts/instance.md)
+
 - [Links](./links.md)
