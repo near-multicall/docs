@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Onboarding - Near-multicall</title>
+        <title>Factory - Near-multicall</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/onboarding.html" class="active"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="../getting-started/making-proposals.html"><strong aria-hidden="true">1.2.</strong> Making Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="../dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="../contracts/overview.html"><strong aria-hidden="true">3.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../contracts/factory.html"><strong aria-hidden="true">3.1.</strong> Factory</a></li><li class="chapter-item expanded "><a href="../contracts/instance.html"><strong aria-hidden="true">3.2.</strong> Instance</a></li></ol></li><li class="chapter-item expanded "><a href="../links.html"><strong aria-hidden="true">4.</strong> Links</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="../getting-started/making-proposals.html"><strong aria-hidden="true">1.2.</strong> Making Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="../dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="../contracts/overview.html"><strong aria-hidden="true">3.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../contracts/factory.html" class="active"><strong aria-hidden="true">3.1.</strong> Factory</a></li><li class="chapter-item expanded "><a href="../contracts/instance.html"><strong aria-hidden="true">3.2.</strong> Instance</a></li></ol></li><li class="chapter-item expanded "><a href="../links.html"><strong aria-hidden="true">4.</strong> Links</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,50 +142,43 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="onboard-your-dao"><a class="header" href="#onboard-your-dao">Onboard your DAO</a></h1>
-<div id="admonition-note" class="admonition note">
+                        <h1 id="the-factory-contract"><a class="header" href="#the-factory-contract">The factory contract</a></h1>
+<p>The main method on the factory contract is <code>create()</code>. It must be called from a DAO using a FunctionCall proposal.
+Here's the singature of the method:</p>
+<pre><code class="language-TypeScript">export function create(
+    multicall_init_args: { 
+        admin_accounts: string[];
+        croncat_manager: string;
+        job_bond: u128;
+    },
+    public_key: string = &quot;&quot;
+): ContractPromiseBatch
+</code></pre>
+<ul>
+<li><code>admin_accounts</code>: a list of NEAR accounts that will have absolute control over the instance, including its funds. We recommend that only the DAO is included here so the created instance only executes instructions approved by the DAO.</li>
+<li><code>croncat_manager</code>: address of the <a href="https://cron.cat/" target="_blank">Croncat</a> manager contract. It is used by our scheduling features.</li>
+<li><code>job_bond</code>: the job bond is the $NEAR amount to be paid by users wishing to submit scheduled multicall proposals to the DAO. The proposer will be re-imbursed upon approval of his proposal. By default we set it to be equal to the DAO's proposal bond.</li>
+<li><code>public_key</code>: this is <strong>optional</strong>. When provided, this key will added as a <a href="https://docs.near.org/concepts/basics/accounts/access-keys#full-access-keys" target="_blank">fullAccess key</a> on the multicall instance. </li>
+</ul>
+<div id="admonition-important" class="admonition tip">
 <div class="admonition-title">
-<p>Note</p>
-<p><a class="admonition-anchor-link" href="#admonition-note"></a></p>
+<p>Important</p>
+<p><a class="admonition-anchor-link" href="#admonition-important"></a></p>
 </div>
 <div>
-<p>In order to create a multicall instance for your DAO, you must have permissions to create function-call proposals on the DAO.</p>
+<p>If a public key is provided, do not include the &quot;ed25519:&quot; prefix.</p>
 </div>
 </div>
-<ol>
-<li>Go to <a href="https://multicall.app/#/dao" target="_blank">https://multicall.app/#/dao</a></li>
-<li>In the lower left hand corner log in with your wallet (1.) and select the DAO you would like to use multicall with (2.).</li>
-</ol>
-<p><img src="https://i.imgur.com/PiS2KTW.png" alt="" /></p>
-<div id="admonition-tip" class="admonition tip">
-<div class="admonition-title">
-<p>Tip</p>
-<p><a class="admonition-anchor-link" href="#admonition-tip"></a></p>
-</div>
-<div>
-<p>If the DAO symbol lights up red, the address is not a valid dao address - please check for typos. Instead the symbol should be yellow, indicating that while the DAO exists, there is no belonging multicall instance yet.</p>
-</div>
-</div>
-<ol start="3">
-<li>In the middle of the page you see requirements that need to be met in order to create a multicall instance for the specified dao. If all except &quot;<em>DAO has no multicall instance</em>&quot; are met, a green button shows up, click it to propose a multicall creation proposal.</li>
-</ol>
-<p><img src="https://i.imgur.com/9fntsfD.png" alt="" /></p>
-<p>The website will also show a blue button, if a creation proposal already exists, click it to vote yes (You can also vote using AstroDAO).</p>
-<p><img src="https://i.imgur.com/mQpHGcu.png" alt="" /></p>
-<ol start="4">
-<li>Once the proposal passes, a multicall instance will be deployed to <strong>[dao‑name].v1.multicall.near</strong>. If a multicall instance exists for the chosen DAO, the website will display its state, such as whitelisted tokens and job bond.</li>
-</ol>
-<p><img src="https://i.imgur.com/IIQYxOs.png" alt="" /></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../getting-started/introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../contracts/overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../getting-started/making-proposals.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../contracts/instance.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -195,11 +188,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../getting-started/introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../contracts/overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../getting-started/making-proposals.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../contracts/instance.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

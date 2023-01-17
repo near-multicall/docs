@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="getting-started/making-proposals.html"><strong aria-hidden="true">1.2.</strong> Making Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="links.html"><strong aria-hidden="true">3.</strong> Links</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="getting-started/making-proposals.html"><strong aria-hidden="true">1.2.</strong> Making Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="contracts/overview.html"><strong aria-hidden="true">3.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="contracts/factory.html"><strong aria-hidden="true">3.1.</strong> Factory</a></li><li class="chapter-item expanded "><a href="contracts/instance.html"><strong aria-hidden="true">3.2.</strong> Instance</a></li></ol></li><li class="chapter-item expanded "><a href="links.html"><strong aria-hidden="true">4.</strong> Links</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -264,6 +264,140 @@ When making a multicall proposal, keep in mind that the actions will be called f
 </ul>
 </div>
 </div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="smart-contracts"><a class="header" href="#smart-contracts">Smart contracts</a></h1>
+<p>The project has 2 contracts: the Multicall Instance (MI) and a factory contract for spinning-up instances.
+Both contracts are written using <a href="https://www.assemblyscript.org/" target="_blank">AssemblyScript</a> and are open-source. Code can be found on our <a href="https://github.com/near-multicall/contracts" target="_blank">contracts repository</a>.</p>
+<h2 id="deployments"><a class="header" href="#deployments">Deployments</a></h2>
+<h3 id="near-mainnet"><a class="header" href="#near-mainnet">NEAR Mainnet</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Contract</th><th>Address</th><th>Code hash</th></tr></thead><tbody>
+<tr><td>Factory</td><td><a href="https://explorer.near.org/accounts/v1.multicall.near"><code>v1.multicall.near</code></a></td><td><code>2Y3VuVZTPaXGBnRj6Av9ymKM17iSGv1b1xJTsdkrmSFh</code></td></tr>
+</tbody></table>
+</div>
+<h3 id="near-testnet"><a class="header" href="#near-testnet">NEAR Testnet</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Contract</th><th>Address</th><th>Code hash</th></tr></thead><tbody>
+<tr><td>Factory</td><td><a href="https://explorer.testnet.near.org/accounts/v1_03.multicall.testnet"><code>v1_03.multicall.testnet</code></a></td><td><code>2Y3VuVZTPaXGBnRj6Av9ymKM17iSGv1b1xJTsdkrmSFh</code></td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="the-factory-contract"><a class="header" href="#the-factory-contract">The factory contract</a></h1>
+<p>The main method on the factory contract is <code>create()</code>. It must be called from a DAO using a FunctionCall proposal.
+Here's the singature of the method:</p>
+<pre><code class="language-TypeScript">export function create(
+    multicall_init_args: { 
+        admin_accounts: string[];
+        croncat_manager: string;
+        job_bond: u128;
+    },
+    public_key: string = &quot;&quot;
+): ContractPromiseBatch
+</code></pre>
+<ul>
+<li><code>admin_accounts</code>: a list of NEAR accounts that will have absolute control over the instance, including its funds. We recommend that only the DAO is included here so the created instance only executes instructions approved by the DAO.</li>
+<li><code>croncat_manager</code>: address of the <a href="https://cron.cat/" target="_blank">Croncat</a> manager contract. It is used by our scheduling features.</li>
+<li><code>job_bond</code>: the job bond is the $NEAR amount to be paid by users wishing to submit scheduled multicall proposals to the DAO. The proposer will be re-imbursed upon approval of his proposal. By default we set it to be equal to the DAO's proposal bond.</li>
+<li><code>public_key</code>: this is <strong>optional</strong>. When provided, this key will added as a <a href="https://docs.near.org/concepts/basics/accounts/access-keys#full-access-keys" target="_blank">fullAccess key</a> on the multicall instance. </li>
+</ul>
+<div id="admonition-important" class="admonition tip">
+<div class="admonition-title">
+<p>Important</p>
+<p><a class="admonition-anchor-link" href="contracts/factory.html#admonition-important"></a></p>
+</div>
+<div>
+<p>If a public key is provided, do not include the &quot;ed25519:&quot; prefix.</p>
+</div>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-instance-contract"><a class="header" href="#the-instance-contract">The instance contract</a></h1>
+<p>This contract holds the core logic for multicall. Each DAO gets its own Multicall Instance (MI) contract to use. The contract consists of three main features:</p>
+<ol>
+<li>
+<p>The <strong>main method</strong> in this contract is:<br />
+<code>multicall ( calls: BatchCall[][] )</code><br />
+It executes a bunch of <code>BatchCall</code> arrays.<br />
+Each <code>BatchCall</code> has information for making a batch of function-calls: a target address and an array on function-calls to execute on that target. Each function-call has a function name, arguments encoded in base64, gas to use (u64 encoded as string) and amount of yoctoNEAR attached deposit (u128 encoded as string).<br />
+Batches inside one array run one after another, as a promise chain.<br />
+Different arrays of batches run in parallel.<br />
+Example:</p>
+<pre><code>calls = [
+    [ Batch_11, Batch_12, Batch_13 ],
+    [ Batch_21, Batch_22]
+]
+</code></pre>
+<p>In this example we have 2 arrays of batches. In the first one <code>Batch_12</code> waits for <code>Batch_11</code> and <code>Batch_13</code> waits for <code>Batch_12</code>. In the second array <code>Batch_22</code> waits for <code>Batch_21</code>. Both arrays start executing in the same block and are independent of each other.</p>
+</li>
+<li>
+<p><strong>Permissioned interactions</strong> with the contract through whitelisting of addresses:<br />
+Due to the async nature of Near, funds can sit in the contract during multiple blocks awaiting the execution of cross-contract calls. To prevent stealing of funds, we require an address to be whitelisted before calling one of the contract's critical methods.
+there are two main whitelists:<br />
+<code>admins whitelist</code> holds addresses that can interact with the contract, they can add or remove others from the whitelist.<br />
+<code>tokens whitelist</code> holds token addresses that can be attached to function calls, as the contract implements ft_on_transfer.<br />
+The contract's address is whitelisted by default, this allows nesting multiple contract methods for convenience.</p>
+</li>
+<li>
+<p><strong>Jobs</strong>:<br />
+Multicall executions can be scheduled to run at a certain time in the future, made possible by integrating <a href="https://cron.cat/">croncat</a>. Anyone can register a job on the multicall contract, but an admin has to approve it. Admins can pause/resume job executions and also edit a job's multicall arguments.<br />
+The following must be specified when creating a job:</p>
+<pre><code class="language-ts">function job_add (
+    job_multicalls: MulticallArgs[],
+    job_cadence: string, // cron expression
+    job_trigger_gas: u64,
+    job_total_budget: u128,
+    job_start_at: u64 = context.blockTimestamp
+): u32 
+</code></pre>
+</li>
+</ol>
+<h2 id="example-calls"><a class="header" href="#example-calls">Example Calls</a></h2>
+<h3 id="call-structure"><a class="header" href="#call-structure">Call structure</a></h3>
+<p>example multicall arguments:</p>
+<pre><code class="language-json=">{
+    &quot;calls&quot;: [
+        [ 
+            {
+                &quot;address&quot;: &quot;hello.lennczar.testnet&quot;,
+                &quot;actions&quot;: [
+                    {
+                        &quot;func&quot;: &quot;hello&quot;,
+                        &quot;args&quot;: &quot;eyJ0aGluZyI6IldvcmxkIn0=&quot;, // base64 encoding for {&quot;thing&quot;:&quot;World&quot;}
+                        &quot;gas&quot;: &quot;10000000000000&quot;,
+                        &quot;depo&quot;: &quot;0&quot;
+                    },
+                    {
+                        &quot;func&quot;: &quot;hello&quot;,
+                        &quot;args&quot;: &quot;eyJ0aGluZyI6IldvcmxkIn0=&quot;, // base64 encoding for {&quot;thing&quot;:&quot;World&quot;}
+                        &quot;gas&quot;: &quot;10000000000000&quot;,
+                        &quot;depo&quot;: &quot;0&quot;
+                    }
+                ]
+            },
+            {
+                &quot;address&quot;: &quot;hello.lennczar.testnet&quot;,
+                &quot;actions&quot;: [
+                    {
+                        &quot;func&quot;: &quot;hello&quot;,
+                        &quot;args&quot;: &quot;eyJ0aGluZyI6IldvcmxkIn0=&quot;, // base64 encoding for {&quot;thing&quot;:&quot;World&quot;}
+                        &quot;gas&quot;: &quot;10000000000000&quot;,
+                        &quot;depo&quot;: &quot;0&quot;
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                &quot;address&quot;: &quot;hello.lennczar.testnet&quot;,
+                &quot;actions&quot;: [
+                    {
+                        &quot;func&quot;: &quot;hello&quot;,
+                        &quot;args&quot;: &quot;eyJ0aGluZyI6IldvcmxkIn0=&quot;, // base64 encoding for {&quot;thing&quot;:&quot;World&quot;}
+                        &quot;gas&quot;: &quot;10000000000000&quot;,
+                        &quot;depo&quot;: &quot;0&quot;
+                    }
+                ]
+            }
+        ]
+    ]
+}
+</code></pre>
+<p>This example calls the function <code>hello(thing: string): string</code> in the contract <code>hello.lennczar.testnet</code>.<br />
+We see two arrays of batches: in the first array we have 2 batches that will be run as a promise chain (i.e. second batch will wait for the first batch). The first batch calls the function twice and the second batch calls it only once. In the second array we have one batch that calls the function once, it will run in parallel independently of the two previously mentioned batches.<br />
+Running this results in the following <a href="https://explorer.testnet.near.org/transactions/HHEDj5FnRXJpGwR68PegHNWgpGjXcFWFyq2Nw27sDkx2">transaction</a>  </p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="important-links"><a class="header" href="#important-links">Important links:</a></h1>
 <ul>
 <li><strong>Website (Mainnet):</strong> <a href="https://multicall.app/" target="_blank">https://multicall.app</a></li>
