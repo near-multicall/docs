@@ -2,7 +2,8 @@
 
 - [Getting Started](./getting-started/introduction.md)
     - [Onboarding](./getting-started/onboarding.md)
-    - [Making Proposals](./getting-started/making-proposals.md)
+    - [Make Proposals](./getting-started/make-proposals.md)
+    - [View Proposals](./getting-started/view-proposals.md)
 
 - [DAO login](./dao-login.md)
 
