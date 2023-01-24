@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Contracts - Near-multicall</title>
+        <title>View Proposals - Near-multicall</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="../getting-started/make-proposals.html"><strong aria-hidden="true">1.2.</strong> Make Proposals</a></li><li class="chapter-item expanded "><a href="../getting-started/view-proposals.html"><strong aria-hidden="true">1.3.</strong> View Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="../dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="../contracts/overview.html" class="active"><strong aria-hidden="true">3.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../contracts/factory.html"><strong aria-hidden="true">3.1.</strong> Factory</a></li><li class="chapter-item expanded "><a href="../contracts/instance.html"><strong aria-hidden="true">3.2.</strong> Instance</a></li></ol></li><li class="chapter-item expanded "><a href="../links.html"><strong aria-hidden="true">4.</strong> Links</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="../getting-started/make-proposals.html"><strong aria-hidden="true">1.2.</strong> Make Proposals</a></li><li class="chapter-item expanded "><a href="../getting-started/view-proposals.html" class="active"><strong aria-hidden="true">1.3.</strong> View Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="../dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="../contracts/overview.html"><strong aria-hidden="true">3.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../contracts/factory.html"><strong aria-hidden="true">3.1.</strong> Factory</a></li><li class="chapter-item expanded "><a href="../contracts/instance.html"><strong aria-hidden="true">3.2.</strong> Instance</a></li></ol></li><li class="chapter-item expanded "><a href="../links.html"><strong aria-hidden="true">4.</strong> Links</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,29 +142,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="smart-contracts"><a class="header" href="#smart-contracts">Smart contracts</a></h1>
-<p>The project has 2 contracts: the Multicall Instance (MI) and a factory contract for spinning-up instances.
-Both contracts are written using <a href="https://www.assemblyscript.org/" target="_blank">AssemblyScript</a> and are open-source. Code can be found on our <a href="https://github.com/near-multicall/contracts" target="_blank">contracts repository</a>.</p>
-<h2 id="deployments"><a class="header" href="#deployments">Deployments</a></h2>
-<h3 id="near-mainnet"><a class="header" href="#near-mainnet">NEAR Mainnet</a></h3>
-<div class="table-wrapper"><table><thead><tr><th>Contract</th><th>Address</th><th>Code hash</th></tr></thead><tbody>
-<tr><td>Factory</td><td><a href="https://explorer.near.org/accounts/v1.multicall.near"><code>v1.multicall.near</code></a></td><td><code>2Y3VuVZTPaXGBnRj6Av9ymKM17iSGv1b1xJTsdkrmSFh</code></td></tr>
-</tbody></table>
+                        <h1 id="view-a-multicall-proposal"><a class="header" href="#view-a-multicall-proposal">View a multicall proposal</a></h1>
+<p>After creating a proposal, the next step is for other DAO members to review it and vote on it. However, the way multicall proposals are displayed on AstroDAO (or other generic DAO frotends) isn't human-friendly. As an example, can you tell what the following proposal does?</p>
+<p><img src="https://i.imgur.com/hwCEPqW.png" alt="" /></p>
+<h2 id="visualizing-proposals"><a class="header" href="#visualizing-proposals">Visualizing proposals</a></h2>
+<p>It is <strong>really</strong> important to understand proposals before voting on them. Hence, the need to parse their arguments and display them in a more intuitive way. You can use the multicall UI to visualize a proposal by just copying the proposal's link and pasting it into the &quot;<strong>load from proposal</strong>&quot; dialog. The following GIF demonstrates that:</p>
+<p><img src="https://i.imgur.com/NUwcils.gif" alt="" /></p>
+<div id="admonition-hint" class="admonition tip">
+<div class="admonition-title">
+<p>Hint</p>
+<p><a class="admonition-anchor-link" href="#admonition-hint"></a></p>
 </div>
-<h3 id="near-testnet"><a class="header" href="#near-testnet">NEAR Testnet</a></h3>
-<div class="table-wrapper"><table><thead><tr><th>Contract</th><th>Address</th><th>Code hash</th></tr></thead><tbody>
-<tr><td>Factory</td><td><a href="https://explorer.testnet.near.org/accounts/v1_03.multicall.testnet"><code>v1_03.multicall.testnet</code></a></td><td><code>2Y3VuVZTPaXGBnRj6Av9ymKM17iSGv1b1xJTsdkrmSFh</code></td></tr>
-</tbody></table>
+<div>
+<p>We currently support proposal links from both <a href="https://astrodao.com/">AstroDAO</a> and the base <a href="https://v2.sputnik.fund/">Sputnik UI</a>.
+We're also open to supporting more UIs as well, so send us your suggestions!</p>
 </div>
+</div>
+<p>Another use case for this feature is the creation of templates: If you want to create a proposal that's very similar to another proposal that you or someone else made in the past (regardless of which DAO it happened on), then why start from scratch? Instead, load the old proposal and apply your changes on top of it.</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../dao-login.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../getting-started/make-proposals.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../contracts/factory.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../dao-login.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -174,11 +178,11 @@ Both contracts are written using <a href="https://www.assemblyscript.org/" targe
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../dao-login.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../getting-started/make-proposals.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../contracts/factory.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../dao-login.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

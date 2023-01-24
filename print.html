@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="getting-started/making-proposals.html"><strong aria-hidden="true">1.2.</strong> Making Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="contracts/overview.html"><strong aria-hidden="true">3.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="contracts/factory.html"><strong aria-hidden="true">3.1.</strong> Factory</a></li><li class="chapter-item expanded "><a href="contracts/instance.html"><strong aria-hidden="true">3.2.</strong> Instance</a></li></ol></li><li class="chapter-item expanded "><a href="links.html"><strong aria-hidden="true">4.</strong> Links</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="getting-started/introduction.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="getting-started/onboarding.html"><strong aria-hidden="true">1.1.</strong> Onboarding</a></li><li class="chapter-item expanded "><a href="getting-started/make-proposals.html"><strong aria-hidden="true">1.2.</strong> Make Proposals</a></li><li class="chapter-item expanded "><a href="getting-started/view-proposals.html"><strong aria-hidden="true">1.3.</strong> View Proposals</a></li></ol></li><li class="chapter-item expanded "><a href="dao-login.html"><strong aria-hidden="true">2.</strong> DAO login</a></li><li class="chapter-item expanded "><a href="contracts/overview.html"><strong aria-hidden="true">3.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="contracts/factory.html"><strong aria-hidden="true">3.1.</strong> Factory</a></li><li class="chapter-item expanded "><a href="contracts/instance.html"><strong aria-hidden="true">3.2.</strong> Instance</a></li></ol></li><li class="chapter-item expanded "><a href="links.html"><strong aria-hidden="true">4.</strong> Links</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -202,7 +202,7 @@ edit</span>) in the top right corner of a card to open the card's editor where y
 <div id="admonition-info" class="admonition info">
 <div class="admonition-title">
 <p>Info</p>
-<p><a class="admonition-anchor-link" href="getting-started/making-proposals.html#admonition-info"></a></p>
+<p><a class="admonition-anchor-link" href="getting-started/make-proposals.html#admonition-info"></a></p>
 </div>
 <div>
 <p>Think we're missing an important card? Let us know on our <a href="https://discord.gg/wc6T6bPvdr" target="_blank">Discord</a> !</p>
@@ -212,7 +212,7 @@ edit</span>) in the top right corner of a card to open the card's editor where y
 <div id="admonition-note" class="admonition note">
 <div class="admonition-title">
 <p>Note</p>
-<p><a class="admonition-anchor-link" href="getting-started/making-proposals.html#admonition-note"></a></p>
+<p><a class="admonition-anchor-link" href="getting-started/make-proposals.html#admonition-note"></a></p>
 </div>
 <div>
 <p>A small amount of NEAR will be required to make the transaction. It represents a proposal bond paid to the DAO, and will be reimbursed once your DAO proposal is approved. The amount is set in the DAO configuration, near-multicall does not charge any fees.</p>
@@ -223,7 +223,7 @@ edit</span>) in the top right corner of a card to open the card's editor where y
 <div id="admonition-caution" class="admonition warning">
 <div class="admonition-title">
 <p>Caution</p>
-<p><a class="admonition-anchor-link" href="getting-started/making-proposals.html#admonition-caution"></a></p>
+<p><a class="admonition-anchor-link" href="getting-started/make-proposals.html#admonition-caution"></a></p>
 </div>
 <div>
 <p>Near-multicall is a beta software and we do not guarantee the safety of assets on the MI. Our contracts are open source, and can be found on <a href="https://github.com/near-multicall/contracts" target="_blank">this repository</a>. Use at your own risk.</p>
@@ -232,6 +232,23 @@ edit</span>) in the top right corner of a card to open the card's editor where y
 <p><img src="https://i.imgur.com/myT7aaY.png" alt="" /></p>
 <p>You can easily see the available funds on the MI via the <em>Funds</em> tab on the <a href="https://multicall.app/#/dao" target="_blank"><i>DAO page</i></a>.<br />
 When making a multicall proposal, keep in mind that the actions will be called from the MI's address, and not the DAO address. Say you want to interact with a Dapp, it will be the MI's Dapp account that is used, not the DAO's.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="view-a-multicall-proposal"><a class="header" href="#view-a-multicall-proposal">View a multicall proposal</a></h1>
+<p>After creating a proposal, the next step is for other DAO members to review it and vote on it. However, the way multicall proposals are displayed on AstroDAO (or other generic DAO frotends) isn't human-friendly. As an example, can you tell what the following proposal does?</p>
+<p><img src="https://i.imgur.com/hwCEPqW.png" alt="" /></p>
+<h2 id="visualizing-proposals"><a class="header" href="#visualizing-proposals">Visualizing proposals</a></h2>
+<p>It is <strong>really</strong> important to understand proposals before voting on them. Hence, the need to parse their arguments and display them in a more intuitive way. You can use the multicall UI to visualize a proposal by just copying the proposal's link and pasting it into the &quot;<strong>load from proposal</strong>&quot; dialog. The following GIF demonstrates that:</p>
+<p><img src="https://i.imgur.com/NUwcils.gif" alt="" /></p>
+<div id="admonition-hint" class="admonition tip">
+<div class="admonition-title">
+<p>Hint</p>
+<p><a class="admonition-anchor-link" href="getting-started/view-proposals.html#admonition-hint"></a></p>
+</div>
+<div>
+<p>We currently support proposal links from both <a href="https://astrodao.com/">AstroDAO</a> and the base <a href="https://v2.sputnik.fund/">Sputnik UI</a>.
+We're also open to supporting more UIs as well, so send us your suggestions!</p>
+</div>
+</div>
+<p>Another use case for this feature is the creation of templates: If you want to create a proposal that's very similar to another proposal that you or someone else made in the past (regardless of which DAO it happened on), then why start from scratch? Instead, load the old proposal and apply your changes on top of it.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="dao-login"><a class="header" href="#dao-login">DAO login</a></h1>
 <p>Near-multicall allows DAOs to interact more freely with other DApps on NEAR. However, it's not always easy to see the results of these interactions. DApp interfaces provide invaluable information to their users, such as:</p>
 <ul>
