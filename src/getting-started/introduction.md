@@ -11,4 +11,4 @@ The MI address is always derived from the DAO address. It's easy to explain it w
 If the DAO address is `marmaj.sputnik-dao.near` then it will have a MI deployed at `marmaj.v1.multicall.near`
 ```
 
-DAOs need to create a multicall instance (MI) before using it for the first time. You can think of this as an installation step that only happens once. Instructions for this can be found on the [onboarding guide](getting-started/onboarding.md).
+DAOs need to create a multicall instance (MI) before using it for the first time. You can think of this as an installation step that only happens once. Instructions for this can be found on the [onboarding guide](./onboarding.md).
